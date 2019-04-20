@@ -45,7 +45,7 @@ private:
 	void Conversion(int, const char[], char[]) const;
 	void CP1_SearchColor(piece*, conect, color, const char[]);
 	void CP2_SearchColor(piece*, conect, color, color, const  char[], int);
-	void CP3_SearchColor(int, color, color);
+	void CP3_ChangeColor(int);
 	void CP1_ChangeColor(int);
 	void CP2_ChangeColor(int);
 private:

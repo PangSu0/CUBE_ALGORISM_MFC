@@ -204,11 +204,11 @@ void CUBE::Chapter2()
 
 void CUBE::Chapter3()
 {
-
-	CP3_SearchColor(0, sd_position[sd_back], sd_position[sd_right]);
-	CP3_SearchColor(90, sd_position[sd_left], sd_position[sd_back]);
-	CP3_SearchColor(180, sd_position[sd_front], sd_position[sd_left]);
-	CP3_SearchColor(270, sd_position[sd_right], sd_position[sd_front]);
+	enum { RED, BLUE, ORANGE, GREEN };
+	CP3_ChangeColor(RED);
+	CP3_ChangeColor(BLUE);
+	CP3_ChangeColor(ORANGE);
+	CP3_ChangeColor(GREEN);
 }
 
 void CUBE::Chapter4()
@@ -565,20 +565,26 @@ void CUBE::CP2_SearchColor(piece * pieptr, conect conn, color co1, color co2, co
 		Rotater(rotstr[valuenum]);
 }
 
-void CUBE::CP3_SearchColor(int angle, color co1, color co2)
+void CUBE::CP3_ChangeColor(int _color)
 {
 	char str[20] = "L_D_LDBDB_";
 	char rightformula[20] = "DRDR_D_B_D_B";
 	char leftformula[20] = "D_B_D_BDRDR_";
 	conect sidecon[7] = { right,back,left,front,right,back,left };
 	int index;
-	Conversion(angle, str, str);
-	Conversion(angle, rightformula, rightformula);
-	Conversion(angle, leftformula, leftformula);
+
+	const int angle[4] = { 0,90,180,270 };
+	color co1[4] = {sd_position[sd_back], sd_position[sd_left], sd_position[sd_front], sd_position[sd_right] };
+	color co2[4] = {sd_position[sd_right], sd_position[sd_back], sd_position[sd_left], sd_position[sd_front] };
+
+
+	Conversion(angle[_color], str, str);
+	Conversion(angle[_color], rightformula, rightformula);
+	Conversion(angle[_color], leftformula, leftformula);
 	piece* pptr = nullptr;
 	//»©±â
 	pptr = &pie[4][1][1];
-	for (int i = angle; i > 0; i -= 90)
+	for (int i = angle[_color]; i > 0; i -= 90)
 		for (int j = 0; j < 3; j++)
 			pptr = pptr->Getconnect(down);
 
@@ -587,9 +593,9 @@ void CUBE::CP3_SearchColor(int angle, color co1, color co2)
 		pptr = pptr->Getconnect(down);
 		if (index % 3 == 2)
 			continue;
-		if (index % 3 == 0 && pptr->Getcolor() == co1 && pptr->Getconnect(down)->Getcolor() == co2)
+		if (index % 3 == 0 && pptr->Getcolor() == co1[_color] && pptr->Getconnect(down)->Getcolor() == co2[_color])
 			break;
-		if (index % 3 == 1 && pptr->Getcolor() == co1 && pptr->Getconnect(up)->Getcolor() == co2)
+		if (index % 3 == 1 && pptr->Getcolor() == co1[_color] && pptr->Getconnect(up)->Getcolor() == co2[_color])
 			break;
 	}
 	if (index == 10)
@@ -603,20 +609,20 @@ void CUBE::CP3_SearchColor(int angle, color co1, color co2)
 
 	//¸ÂÃß±â
 	pptr = &pie[4][2][1];
-	for (int i = angle; i > 0; i -= 90)
+	for (int i = angle[_color]; i > 0; i -= 90)
 		for (int j = 0; j < 3; j++)
 			pptr = pptr->Getconnect(down);
 
 	for (index = 0; index < 360; index += 90)
 	{
-		if (pptr->Getcolor() == co1 && pptr->Getconnect(sidecon[(index + angle) / 90])->Getcolor() == co2)
+		if (pptr->Getcolor() == co1[_color] && pptr->Getconnect(sidecon[(index + angle[_color]) / 90])->Getcolor() == co2[_color])
 		{
 			for (int i = 0; i < index / 90; i++)
 				Rotate(D_);
 			Rotater(rightformula);
 			break;
 		}
-		if (pptr->Getcolor() == co2 && pptr->Getconnect(sidecon[(index + angle) / 90])->Getcolor() == co1)
+		if (pptr->Getcolor() == co2[_color] && pptr->Getconnect(sidecon[(index + angle[_color]) / 90])->Getcolor() == co1[_color])
 		{
 			for (int i = -1; i < index / 90; i++)
 				Rotate(D_);
@@ -646,8 +652,8 @@ void CUBE::CP1_ChangeColor(int _color)
 	color colorPosition[4] = { sd_position[sd_right], sd_position[sd_back], sd_position[sd_left], sd_position[sd_front] };
 	piece* pieptr = &pie[0][1][1];
 
-	CP1_SearchColor(pieptr, colorConect[(_color + 1) % 4], colorPosition[_color], SearColor[_color][0]);	//Èò»ö ÃÊ·Ï»ö left ¹æÇâ Å½»ö
-	CP1_SearchColor(pieptr, colorConect[_color], colorPosition[_color], SearColor[_color][1]);	// ;;
+	CP1_SearchColor(pieptr, colorConect[(_color + 1) % 4], colorPosition[_color], SearColor[_color][0]);
+	CP1_SearchColor(pieptr, colorConect[_color], colorPosition[_color], SearColor[_color][1]);
 	pieptr = &pie[_color + 1][1][1];
 	CP1_SearchColor(pieptr, down, colorPosition[_color], SearColor[_color][2]);
 }
