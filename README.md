@@ -13,4 +13,5 @@ http://rubiksim.sourceforge.net/
 6. 코너 조각을 맞춘다.
 7. 아랫면을 모두 맞춘다.
 
+-실행방법-
 Edit - Run 을 눌러 실행합니다.
