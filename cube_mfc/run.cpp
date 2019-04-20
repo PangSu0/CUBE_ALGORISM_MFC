@@ -3,7 +3,7 @@
 #include <iostream>
 #include <Windows.h>
 
-conect CUBE::OppositeConnect(conect conn)
+conect CUBE::OppositeConnect(conect conn) const
 {
 	switch (conn)
 	{
@@ -34,17 +34,17 @@ void piece::Setconnect(conect cn, piece * pi)
 	conn[cn] = pi;
 }
 
-piece* piece::Getconnect(conect cn)
+piece* piece::Getconnect(conect cn) const
 {
 	return conn[cn];
 }
 
-color piece::Getcolor()
+color piece::Getcolor() const
 {
 	return col;
 }
 
-CUBE::CUBE(WCube* ppcb, rotation * pFormula)
+CUBE::CUBE(WCube* ppcb, rotation pFormula[]) 
 {
 	formulaIndex = 0;
 	formula = pFormula;
@@ -90,7 +90,6 @@ CUBE::CUBE(WCube* ppcb, rotation * pFormula)
 		CrossConnect(pie[5][2][i], left, pie[4][2][2 - i], right);//5 & 4
 		CrossConnect(pie[4][0][2 - i], left, pie[0][0][i], right);	//0 & 4
 	}
-	Setup();
 }
 
 void CUBE::Rotate(rotation rot)
@@ -148,7 +147,7 @@ void CUBE::Rotate(rotation rot)
 	}
 }
 
-void CUBE::Rotater(const char* str)
+void CUBE::Rotater(const char str[])
 {
 	int i = 0;
 	while (str[i] != '\0')
@@ -175,14 +174,6 @@ void CUBE::Rotater(const char* str)
 			}
 		i++;
 	}
-}
-
-void CUBE::Setup()
-{
-	for (int f = 0; f < 6; f++)
-		for (int y = 0; y < 3; y++)
-			for (int x = 0; x < 3; x++)
-				pie[f][y][x].Setcolor(color(f + 1));
 }
 
 void CUBE::Setpiece(piece cube[][3][3])
@@ -426,7 +417,7 @@ void CUBE::CrossConnect(piece & pi1, conect con1, piece & pi2, conect con2)
 	pi2.Setconnect(con2, &pi1);
 }
 
-void CUBE::Conversion(int angle, const char* str, char sttr[])
+void CUBE::Conversion(int angle, const char str[], char sttr[]) const
 {
 	int i = 0;
 	switch (angle)
@@ -494,7 +485,7 @@ void CUBE::Conversion(int angle, const char* str, char sttr[])
 
 }
 
-void CUBE::CP1_SearchColor(piece * pieptr, conect conn, color co, const char* str)
+void CUBE::CP1_SearchColor(piece * pieptr, conect conn, color co, const char str[])
 {
 	int i = 0;
 	int j = 0;
@@ -533,7 +524,7 @@ void CUBE::CP1_SearchColor(piece * pieptr, conect conn, color co, const char* st
 		Rotater(rotstr[valuenum]);
 }
 
-void CUBE::CP2_SearchColor(piece * pieptr, conect conn, color co1, color co2, const char* str, int num)
+void CUBE::CP2_SearchColor(piece * pieptr, conect conn, color co1, color co2, const char str[], int num)
 {
 	int i = 0;
 	int j = 0;
@@ -573,8 +564,6 @@ void CUBE::CP2_SearchColor(piece * pieptr, conect conn, color co1, color co2, co
 	if (index < 10)
 		Rotater(rotstr[valuenum]);
 }
-
-
 
 void CUBE::CP3_SearchColor(int angle, color co1, color co2)
 {

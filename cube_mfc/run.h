@@ -11,15 +11,14 @@ enum conect { up, down, left, right , front, back};
 enum rotation { U, D, L, R, F, B, U_, D_, L_, R_, F_, B_ ,EndRotation, PassRotation };
 enum position { sd_top, sd_bottom, sd_left, sd_right, sd_front, sd_back };
 
-
 class piece
 {
 public:
 	piece();
 	void Setcolor(color);
 	void Setconnect(conect, piece*);
-	piece* Getconnect(conect);
-	color Getcolor();
+	piece* Getconnect(conect) const;
+	color Getcolor() const;
 private:
 	color col;
 	piece* conn[6];
@@ -28,10 +27,9 @@ private:
 class CUBE
 {
 public:
-	CUBE(WCube*, rotation*);
+	CUBE(WCube*, rotation[]);
 	void Rotate(rotation);
-	void Rotater(const char*);
-	void Setup();
+	void Rotater(const char[]);
 	void Setpiece(piece[][3][3]);
 	void Chapter1();
 	void Chapter2();
@@ -42,11 +40,11 @@ public:
 	void Chapter7();
 	void Run();
 private:
-	conect OppositeConnect(conect);
+	conect OppositeConnect(conect) const;
 	void CrossConnect(piece&, conect, piece&, conect);
-	void Conversion(int, const char*, char[]);
-	void CP1_SearchColor(piece*, conect, color, const char*);
-	void CP2_SearchColor(piece*, conect, color, color, const  char*, int);
+	void Conversion(int, const char[], char[]) const;
+	void CP1_SearchColor(piece*, conect, color, const char[]);
+	void CP2_SearchColor(piece*, conect, color, color, const  char[], int);
 	void CP3_SearchColor(int, color, color);
 	void CP1_ChangeColor(int);
 	void CP2_ChangeColor(int);
@@ -58,3 +56,4 @@ private:
 	int formulaIndex;
 };
 #endif //RUN_H
+
