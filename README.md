@@ -1,8 +1,6 @@
-# CUBE_ALGORISM_MFC
+# CUBE_ALGORITHM_MFC
 
-http://rubiksim.sourceforge.net/
-
-위 사이트의 MFC3D큐브 프로그램을 기반으로 큐브알고리즘을 제작하였습니다.
+MFC3D큐브 프로그램을 기반으로 큐브알고리즘을 제작하였습니다.
 
 총 7단계로 구성되어 있으며 아래와 같습니다.
 1. 윗면의 십자가를 맞춘다.
@@ -15,3 +13,5 @@ http://rubiksim.sourceforge.net/
 
 -실행방법-
 Edit - Run 을 눌러 실행합니다.
+
+http://rubiksim.sourceforge.net/
